@@ -71,6 +71,7 @@ var checkAnswers = function () {
     if (answer !== correctAnswers[correctAnswerIndex]) {
         state.time -= 10;
         questFeedback.textContent = "Wrong!"
+        console.log(correctAnswerIndex)
     }
     else {
         questFeedback.textContent = "Correct!"
@@ -79,6 +80,8 @@ var checkAnswers = function () {
     if (correctAnswerIndex === 4) {
         clearInterval(state.timerInterval)
         saveHighScore();
+        enterInitals();
+
     }
     else {
         createQuizQuest();
@@ -87,8 +90,18 @@ var checkAnswers = function () {
     correctAnswerIndex++
 }
 
+var enterInitals = function () {
+    quizList.innerHTML = ''
+    questMain.innerHTML = ''
+    questFeedback.innerHTML = 'Enter your Initials to save your high score!'
+    var initials = document.createElement("input")
+    initials.setAttribute("type", "text")
+    initials.className = "initial-input"
+    
+    questContainer.appendChild(initials)
+    
 
-
+ }
 
 var saveHighScore = function () {
     localStorage.setItem("score", JSON.stringify(state.time))

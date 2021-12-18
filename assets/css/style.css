@@ -36,7 +36,7 @@ header {
     flex-direction: column;
     align-content: center;
     width: 50%;
-    margin: 200px auto;
+    margin: 200px auto 30px auto;
 }
 
 .question-container button {
@@ -67,3 +67,31 @@ header {
     width: fit-content;
 }
 
+.quest-feedback {
+    display: flex;
+    justify-content: center;
+}
+
+.quest-feedback-text {
+    font-size: 1.4em;
+    color: rgb(119, 76, 160);
+    
+}
+
+.initial-input {
+    border: 3px solid rgb(103, 52, 155);
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(119, 76, 160, 0.5);
+}
+
+.initial-input:focus {
+    border: 3px solid rgb(103, 52, 155);
+}
+
+/* Utilites */
+.border-top {
+    margin: auto;
+    width: 70%;
+    padding-top: 8px;
+    border-top: 3px solid rgba(119, 76, 160, 0.5);
+}
