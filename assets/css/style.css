@@ -39,7 +39,7 @@ header {
     margin: 200px auto 30px auto;
 }
 
-.question-container button {
+#quest-start-btn {
     align-self: center;
     font-size: 1.8vw;
     background-color: rgb(103, 52, 155);
@@ -82,10 +82,20 @@ header {
     border: 3px solid rgb(103, 52, 155);
     border-radius: 3px;
     box-shadow: 0 0 8px rgba(119, 76, 160, 0.5);
+    height: 26px;
 }
 
 .initial-input:focus {
     border: 3px solid rgb(103, 52, 155);
+}
+
+.initial-btn {
+    margin-left: 5px;
+    background-color: rgb(119, 76, 160);
+    padding: 3px;
+    font-size: 16px;
+    color: white;
+    border-radius: 8px;
 }
 
 /* Utilites */

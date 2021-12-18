@@ -8,6 +8,8 @@ var questFeedback = document.querySelector(".quest-feedback-text")
 var currentQuestion = 0;
 var correctAnswerIndex = 0;
 
+var score = [];
+
 const quizQuestions = ["Commonly used data types DO NOT include:", "The condition in an if / else statemant is enclosed with _______:", "Arrays in javascript can be used to store _______:", "String values must be enclosed within _______ when being assigned to variables:", "A very useful tool used during development and debugging for printing content to the debugger is:"]
 const quizAnswers = [["1. strings", "2. booleans", "3. alerts", "4. numbers"], ["1. quotes", "2. curley brackets", "3. parentheses", "4. square brackets"], ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"], ["1. commas", "2. curley brackets", "3. quotes", "4. parentheses"], ["1. javascript", "2. git/bash", "3. for loops", "4. console.log"]]
 const correctAnswers = ["2", "2", "3", "2", "3"]
@@ -79,7 +81,7 @@ var checkAnswers = function () {
 
     if (correctAnswerIndex === 4) {
         clearInterval(state.timerInterval)
-        saveHighScore();
+        score.push(state.time)
         enterInitals();
 
     }
@@ -91,30 +93,55 @@ var checkAnswers = function () {
 }
 
 var enterInitals = function () {
+
     quizList.innerHTML = ''
     questMain.innerHTML = ''
     questFeedback.innerHTML = 'Enter your Initials to save your high score!'
-    var initials = document.createElement("input")
-    initials.setAttribute("type", "text")
-    initials.className = "initial-input"
-    
-    questContainer.appendChild(initials)
-    
 
+    var initialsForm = document.createElement("form")
+
+    questContainer.appendChild(initialsForm)
+
+    var initialsContainer = document.createElement("div")
+
+    initialsForm.appendChild(initialsContainer)
+
+    var initialsLabel = document.createElement("label")
+    initialsLabel.setAttribute("for", "initialInput")
+
+    var initialsInput = document.createElement("input")
+    initialsInput.setAttribute("type", "text")
+    initialsInput.setAttribute("id", "initialsInput")
+    initialsInput.className = "initial-input"
+
+    initialsContainer.appendChild(initialsInput)
+
+    var initialsBtn = document.createElement("input")
+    initialsBtn.className = "initial-btn"
+    initialsBtn.textContent = "Submit"
+    initialsBtn.setAttribute("type", "submit")
+    
+    initialsContainer.appendChild(initialsBtn)
+
+    initialsContainer.addEventListener("click", function(event) {
+        if (event.target === initialsBtn) {
+            score.push(initialsInput.value)
+            saveHighScore();
+        }
+    })
  }
 
 var saveHighScore = function () {
-    localStorage.setItem("score", JSON.stringify(state.time))
+    localStorage.setItem("score", JSON.stringify(score))
 }
-
-
-
 
 quizStart();
 
 questStartBtn.addEventListener("click", quizQuest);
 
-
-
-
-
+//initialsContainer.addEventListener("click", function() {
+    //if (this === "initial-btn") {
+        //saveHighScore();
+        //console.log("click")
+    //}
+//})
