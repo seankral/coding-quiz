@@ -4,6 +4,8 @@ var questStartBtn = document.querySelector("#quest-start-btn");
 var questMain = document.querySelector(".quest-main");
 var quizList = document.querySelector("#quiz-list");
 var questFeedback = document.querySelector(".quest-feedback-text")
+var highScoreBtn = document.querySelector(".high-score")
+
 
 var currentQuestion = 0;
 var correctAnswerIndex = 0;
@@ -41,6 +43,8 @@ const view = {
     }
 };
 
+
+
 var quizStart = function () {
     questStart.textContent = "Try to answer the following code questions within the time limit. Keep in mind that wrong answers will penalize your score/time by 10 seconds!"
     questStartBtn.textContent = "Start Quiz"
@@ -73,15 +77,13 @@ var checkAnswers = function () {
     if (answer !== correctAnswers[correctAnswerIndex]) {
         state.time -= 10;
         questFeedback.textContent = "Wrong!"
-        console.log(correctAnswerIndex)
     }
     else {
         questFeedback.textContent = "Correct!"
     }
 
     if (correctAnswerIndex === 4) {
-        clearInterval(state.timerInterval)
-        score.push(state.time)
+        clearInterval(state.timerInterval);
         enterInitals();
 
     }
@@ -92,7 +94,8 @@ var checkAnswers = function () {
     correctAnswerIndex++
 }
 
-var enterInitals = function () {
+var enterInitals = function (event) {
+
 
     quizList.innerHTML = ''
     questMain.innerHTML = ''
@@ -120,28 +123,78 @@ var enterInitals = function () {
     initialsBtn.className = "initial-btn"
     initialsBtn.textContent = "Submit"
     initialsBtn.setAttribute("type", "submit")
-    
+
     initialsContainer.appendChild(initialsBtn)
 
-    initialsContainer.addEventListener("click", function(event) {
+
+
+    initialsContainer.addEventListener("click", function (event) {
+        event.preventDefault();
         if (event.target === initialsBtn) {
-            score.push(initialsInput.value)
-            saveHighScore();
+
+            saveHighScore(initialsInput.value);
         }
     })
- }
-
-var saveHighScore = function () {
-    localStorage.setItem("score", JSON.stringify(score))
 }
+
+var saveHighScore = function (initValue) {
+
+    if (localStorage.getItem('score') === null) {
+        var scoreObj = {
+            initials: initValue,
+            score: state.time
+        }
+        score.push(scoreObj)
+        localStorage.setItem("score", JSON.stringify(score))
+    }
+    else {
+        score = localStorage.getItem('score')
+
+        score = JSON.parse(score)
+
+        var scoreObj = {
+            initials: initValue,
+            score: state.time
+        }
+        score.push(scoreObj)
+        localStorage.setItem("score", JSON.stringify(score))
+    }
+
+    viewHighScores();
+}
+
+var viewHighScores = function (event) {
+    questContainer.innerHTML = '';
+    questFeedback.innerHTML = 'High Scores!';
+
+    score = localStorage.getItem("score");
+
+    score = JSON.parse(score);
+
+    var scoreList = document.createElement("ol")
+    scoreList.className = "score-list"
+    questContainer.appendChild(scoreList)
+
+    var returnToQuiz = document.createElement("p")
+    returnToQuiz.textContent = "Refresh to Return to Quiz!"
+    returnToQuiz.className = "return-quiz"
+    questContainer.appendChild(returnToQuiz)
+    
+
+    for (var i = 0; i < score.length; i++) {
+
+        var scoreListEl = document.createElement("li")
+        scoreListEl.className = "score-list-el"
+        scoreListEl.innerHTML = "<h3 class='score-list-text'>" + score[i].initials + " " + score[i].score + "</h3>";
+        scoreList.appendChild(scoreListEl)
+    }
+}
+
 
 quizStart();
 
 questStartBtn.addEventListener("click", quizQuest);
 
-//initialsContainer.addEventListener("click", function() {
-    //if (this === "initial-btn") {
-        //saveHighScore();
-        //console.log("click")
-    //}
-//})
+highScoreBtn.addEventListener("click", viewHighScores);
+
+;
