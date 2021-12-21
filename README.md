@@ -9,10 +9,10 @@ Once the quiz is over you will be promtped to enter you initials and save your h
 
 ## Screenshots 
 
-### High Scores
+### Quiz Start
 ![Screenshot of Website](https://github.com/seankral/coding-quiz/blob/main/assets/images/coding-quiz-read-me.PNG)
 
-### Quiz Start
+### High Scores
 ![Screenshot of Website](https://github.com/seankral/coding-quiz/blob/main/assets/images/coding-quiz-read-me-scores.PNG)
 
 ## Made With
